@@ -4,7 +4,7 @@ from selenium.common.exceptions import NoAlertPresentException  # в начал�
 import math
 
 
-class PageObject(BasePage):
+class ProductPage(BasePage):
     def add_to_basket(self):
         link = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET)
         link.click()
@@ -32,3 +32,11 @@ class PageObject(BasePage):
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.ALERT_BOOK_NAME), \
+            "Success message is presented, but should not be"
+
+    def should_disappear_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.ALERT_BOOK_NAME), \
+            "Success message should disappear"
